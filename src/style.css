@@ -6,6 +6,8 @@
   --primary-color-super-light: #f3f2ff;
   --gray-color-1: #2d2d2d;
   --gray-color-2: #555555;
+  --green-color-1: #02af75;
+  --green-color-2: #e4fff6;
 }
 
 body{
@@ -26,4 +28,25 @@ header{
 
 .header-title{
   color: var(--primary-color);
+}
+
+.task{
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+.undone-task{
+  background-color: var(--primary-color-light);
+  border-radius: 5px;
+  border: var(--primary-color);
+}
+
+.done-task{
+  background-color: var(--green-color-2);
+  border-radius: 5;
+  border: var(--green-color-1)
+}
+
+.hidden{
+  display: none;
 }
