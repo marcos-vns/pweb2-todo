@@ -1,7 +1,9 @@
-import { createTask, updateProgress } from "./handleTasks";
+import { createTask, updateTaskProgress} from "./handleTasks";
 
 const username = "Marcos Vinicius";
-let tasks = 0;
+localStorage.setItem("username", username);
+localStorage.setItem("done", 0);
+localStorage.setItem("total", 0);
 
 const app = document.getElementById('app');
 
@@ -16,6 +18,14 @@ headerElement.appendChild(titleElement);
 const welcomeElement = document.createElement('p');
 welcomeElement.innerText = "Bem vindo, ";
 
+const usernameElement = document.createElement('span');
+usernameElement.innerText = username;
+usernameElement.classList.add('username');
+
+const welcomeEmoji = " 👋";
+
+welcomeElement.append(usernameElement, welcomeEmoji);
+
 headerElement.appendChild(welcomeElement);
 
 const inputElement = document.createElement('input');
@@ -27,8 +37,6 @@ buttonElement.type = "submit";
 buttonElement.innerText = "Adicionar";
 app.appendChild(buttonElement);
 
-const taskListProgressElement = document.createElement('p');
-
 const noTaskElement = document.createElement('div');
 const noTaskIcon = document.createElement('img');
 const noTaskMessageElement = document.createElement('p');
@@ -36,17 +44,26 @@ noTaskMessageElement.innerText = "Nenhum registro encontrado!";
 noTaskElement.appendChild(noTaskIcon);
 noTaskElement.appendChild(noTaskMessageElement);
 
-// noTaskElement.addEventListener('toggle', (event) => );
-
 app.appendChild(noTaskElement);
 
 const tasksListElement = document.createElement('div');
+tasksListElement.classList.add('task-list');
 app.appendChild(tasksListElement);
 
-buttonElement.addEventListener('click', () => {
-  if(inputElement.value === "") return
+// todo: transformar done e total em span
+const taskListProgressElement = document.createElement('p');
 
+tasksListElement.appendChild(taskListProgressElement);
+updateTaskProgress(taskListProgressElement);
+
+buttonElement.addEventListener('click', () => {
+  if(inputElement.value === "") return;
+  
   createTask(inputElement.value, tasksListElement);
   inputElement.value = "";
+
+  updateTaskProgress(taskListProgressElement);
+
+  noTaskElement.classList.toggle('hidden', tasksListElement.childElementCount > 0);
 });
 
